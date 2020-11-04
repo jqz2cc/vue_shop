@@ -35,7 +35,7 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    Message.error(error.response.data)
+    Message.error(error.response.data.meta.msg)
     endLoading()
     // 获取状态码
     const { status } = error.response

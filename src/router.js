@@ -11,8 +11,24 @@ const router = new Router({
     },
     {
       path:'/home',
-      component:()=>import('./pages/home.vue')
-    }
+      component:()=>import('./pages/home.vue'),
+      redirect: '/welcome',
+      children:[
+        {
+          path:'/welcome',
+          component:()=>import('./pages/welcome.vue')
+        },{
+          path:"/users",
+          component:()=>import('./pages/user.vue')
+        },{
+          path:"/rights",
+          component:()=>import('./pages/rights.vue')
+        },{
+          path:'/roles',
+          component:()=>import('./pages/roles.vue')
+        }
+      ]
+    },
 
   ]
 })  
