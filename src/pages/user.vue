@@ -33,6 +33,7 @@
               border
               stripe
               style="width: 100%">
+
       <el-table-column type="index"
                        width="50">
       </el-table-column>
@@ -60,8 +61,7 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作"
-                       width="180">
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary"
                      icon="el-icon-edit"
@@ -73,18 +73,11 @@
                      size="mini"
                      plain
                      @click="deletehandler(scope.row)"></el-button>
-          <el-tooltip class="item"
-                      effect="dark"
-                      :enterable='false'
-                      content="分配角色"
-                      placement="top">
-            <el-button type="warning"
-                       icon="el-icon-setting"
-                       size="mini"
-                       plain
-                       @click="selectRoleHandler(scope.row)"></el-button>
-          </el-tooltip>
-
+          <el-button type="warning"
+                     icon="el-icon-setting"
+                     size="mini"
+                     plain
+                     @click="selectRoleHandler(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -132,11 +125,36 @@
                    @click="submitForm">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 分配角色 -->
+    <el-dialog title="提示"
+               :visible.sync="roleSelectDialog"
+               width="30%">
+      <div class="role_select_content">
+        <p>当前用户:{{currentUserInfo.username}}</p>
+        <p>当前角色:{{currentUserInfo.role_name}}</p>
+        <el-row>
+          分配新角色: <el-select v-model="roleValue"
+                     placeholder="请选择">
+            <el-option v-for="item in roleList"
+                       :key="item.id"
+                       :label="item.roleName"
+                       :value="item.id">
+            </el-option>
+          </el-select>
+        </el-row>
+      </div>
+      <span slot="footer"
+            class="dialog-footer">
+        <el-button @click="roleSelectDialog = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="confirm">确 定</el-button>
+      </span>
+    </el-dialog>
 
   </div>
 </template>
 <script>
-  import { getUsers, switchUserStatus, addNewUser, editUserInfo, deleteUser, getRolersList } from './../request/api.js'
+  import { getUsers, switchUserStatus, addNewUser, editUserInfo, queryRoleList,userRole, deleteUser, getRolersList } from './../request/api.js'
   export default {
     data() {
       return {
@@ -145,6 +163,7 @@
         total: 0,
         pagenum: 1,
         dialogVisible: false,
+        roleSelectDialog: false,
         formLabelAlign: {
           username: '',
           password: '',
@@ -169,13 +188,32 @@
         },
         currentSelectId: '',
         rolesList: [],
+        currentUserInfo: {},
+        roleList: [],
+        roleValue: null,
       }
     },
     created() {
       this.getUsersList();
       this.queryRolersList();
+      this.queryRole();
     },
     methods: {
+      async queryRole() {
+        let { data, meta } = await queryRoleList();
+        if (meta.status == 200) this.roleList = data
+      },
+      async confirm() {
+        console.log(this.roleValue)
+        let {meta} =await userRole({id:this.currentUserInfo.id,rid:this.roleValue})
+        this.roleSelectDialog=false;
+        if(meta.status === 200){
+          this.$message.success(meta.msg)
+          this.getUsersList();
+        }else{
+          this.$message.error(meta.msg)
+        }
+      },
       queryRolersList() {
         getRolersList().then(res => {
           if (res.meta.status == 200) {
@@ -207,7 +245,9 @@
         }).catch(() => { });
       },
       selectRoleHandler(data) {
-        this.currentSelectId = data.id
+        this.roleValue = data.role_name;
+        this.currentUserInfo = data;
+        this.roleSelectDialog = true;
       },
       addUser() {
         addNewUser(this.formLabelAlign).then(res => {

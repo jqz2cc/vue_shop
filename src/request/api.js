@@ -55,3 +55,50 @@ export function getRolersList() {
     method:'get'
   })
 }
+export function getRightsList() {
+  return axios({
+    url:`${basURL}rights/list`,
+    method:'get'
+  })
+}
+export function getRightsTree() {
+  return axios({
+    url:`${basURL}rights/tree`,
+    method:'get'
+  })
+}
+export function deleteRight(params) {
+   return axios({
+     url:`${basURL}roles/${params.roleId}/rights/${params.rightId}`,
+     method:'delete',
+   })
+}
+export function rolesrights(roleId,params) {
+  return axios({
+    url:`${basURL}roles/${roleId}/rights`,
+    method:'post',
+    data:params
+  })
+}
+
+export function deleteRole(params) {
+  return axios({
+    url:`${basURL}roles/${params}`,
+    method:'delete'
+  })
+  
+}
+export function queryRoleList() {
+  return axios({
+    url:`${basURL}roles`,
+    method:'get'
+  })
+}
+
+export function userRole(params) {
+  return axios({
+    url:`${basURL}users/${params.id}/role`,
+    method:'put',
+    data:params
+  })
+}
