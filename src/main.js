@@ -4,12 +4,11 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import router from './router'
 import './assets/css/global.css'
-// import axios from 'axios'
+import treeTable from 'vue-table-with-tree-grid'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-// axios.defaults.baseURL='http://127.0.0.1:8888/api/private/v1/'
-// Vue.prototype.$http=axios
+Vue.component('treeTable',treeTable)
 
 new Vue({
   router,

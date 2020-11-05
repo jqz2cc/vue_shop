@@ -102,3 +102,19 @@ export function userRole(params) {
     data:params
   })
 }
+
+export function getCatgoryList(params) {
+  return axios({
+    url:`${basURL}categories`,
+    method:'get',
+    params
+  })
+}
+export function addCategories(params) {
+  return axios({
+    url:`${basURL}categories`,
+    method:'post',
+    data:params
+  })
+  
+}
