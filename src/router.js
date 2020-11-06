@@ -7,34 +7,37 @@ const router = new Router({
     { path: '/', redirect: '/login' },
     {
       path: '/login',
-      component: () => import('./pages/login.vue')
+      component: () => import(/*webpackChunkName:"login_home_welcome"*/'./pages/login.vue')
     },
     {
       path: '/home',
-      component: () => import('./pages/home.vue'),
+      component: () => import(/*webpackChunkName:"login_home_welcome"*/'./pages/home.vue'),
       redirect: '/welcome',
       children: [
         {
           path: '/welcome',
-          component: () => import('./pages/welcome.vue')
+          component: () => import(/*webpackChunkName:"login_home_welcome"*/'./pages/welcome.vue')
         }, {
           path: "/users",
-          component: () => import('./pages/user.vue')
+          component: () => import(/*webpackChunkName:"users"*/'./pages/user.vue')
         }, {
           path: "/rights",
-          component: () => import('./pages/rights.vue')
+          component: () => import(/*webpackChunkName:"users"*/'./pages/rights.vue')
         }, {
           path: '/roles',
-          component: () => import('./pages/roles.vue')
+          component: () => import(/*webpackChunkName:"users"*/'./pages/roles.vue')
         }, {
           path: '/categories',
-          component: () => import('./pages/categories.vue')
+          component: () => import(/*webpackChunkName:"categories"*/'./pages/categories.vue')
         }, {
           path: '/params',
-          component: () => import('./pages/params.vue')
+          component: () => import(/*webpackChunkName:"categories"*/'./pages/params.vue')
         }, {
           path: '/goods',
-          component: () => import('./pages/goods.vue')
+          component: () => import(/*webpackChunkName:"categories"*/'./pages/goods.vue')
+        },{
+          path:'/reports',
+          component: () => import(/*webpackChunkName:"reports"*/'./pages/report.vue')
         }
       ]
     },
