@@ -152,3 +152,16 @@ export function editParams(ids,params) {
     data:params
   })
 }
+export function getGoodsList(params) {
+  return axios({
+    url:`${basURL}goods`,
+    method:"get",
+    params
+  })
+}
+export function deleteGood(id) {
+  return axios({
+    url:`${basURL}goods/${id}`,
+    method:'delete',
+  })
+}

@@ -46,6 +46,7 @@ router.beforeEach((to, from, next) => {
   // 进入登录页 直接放行
   if (to.path === '/login') return next()
   //  进入其他页面,没有token,直接进入login 页面
+  // console.log(sessionStorage.getItem('token'))
   if (!sessionStorage.getItem('token')) return next('/login');
   //  放行
   next();

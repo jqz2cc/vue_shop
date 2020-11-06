@@ -46,7 +46,7 @@
       login() {
         if (this.loginForm.password && this.loginForm.username) {
           login(this.loginForm).then(res => {
-            if (res.meta.status && res.data.token) {
+            if (res.meta.status==200 && res.data.token) {
               this.$message({
                 message: '登录成功',
                 type: 'success',

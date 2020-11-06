@@ -1,6 +1,7 @@
 import axios from 'axios';
 import router from './../router';
 import { Loading,Message } from 'element-ui'
+// import nprogress from 'nprogress'
 
 let  loading
 function startLoading() {
@@ -28,6 +29,7 @@ axios.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
 axios.interceptors.response.use(
   (response)=>{
     endLoading();
