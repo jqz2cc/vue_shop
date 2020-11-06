@@ -116,5 +116,39 @@ export function addCategories(params) {
     method:'post',
     data:params
   })
+}
+export function getAttributes(id,params) {
+  return axios({
+    url:`${basURL}categories/${id}/attributes`,
+    method:'get',
+    params
+  })
+}
+export function addNewAttr(id,params) {
+  return axios({
+    url:`${basURL}categories/${id}/attributes`,
+    method:'post',
+    data:params
+  })
   
+}
+export function deleteAttrVal(id,attrid) {
+  return axios({
+    url:`${basURL}categories/${id}/attributes/${attrid}`,
+    method:'delete'
+  })
+}
+export function editAttrVal(ids,params) {
+  return axios({
+    url:`${basURL}categories/${ids.id}/attributes/${ids.attrId}`,
+    method:'put',
+    data:params
+  })
+}
+export function editParams(ids,params) {
+  return axios({
+    url:`${basURL}categories/${ids.id}/attributes/${ids.attrId}`,
+    method:'put',
+    data:params
+  })
 }
